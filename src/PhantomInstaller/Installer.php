@@ -8,7 +8,7 @@ use Composer\Package\Version\VersionParser;
 
 class Installer
 {
-    const PHANTOMJS_NAME = 'PhantomJS';
+    const PHANTOMJS_NAME = 'PhantomJS2';
 
     /**
      * Operating system dependend installation of PhantomJS
@@ -25,7 +25,7 @@ class Installer
 
         # fallback to a hardcoded version number, if "dev-master" was set
         if($version === 'dev-master') {
-            $version = '1.9.7';
+          $version = '1.9.7';
         }
 
         #$io = $event->getIO();
@@ -46,43 +46,12 @@ class Installer
         $package->setInstallationSource('dist');
         $package->setDistType(pathinfo($url, PATHINFO_EXTENSION) == 'zip' ? 'zip' : 'tar'); // set zip, tarball
         $package->setDistUrl($url);
+        $package->setBinaries(array('bin/phantomjs'));
 
         # Download the Archive
 
         $downloadManager = $event->getComposer()->getDownloadManager();
         $downloadManager->download($package, $targetDir, false);
-
-        # Copy PhantomJS to "bin" folder
-
-        self::recursiveCopy($targetDir, './bin');
-    }
-
-    /**
-     * Recursive copy (with PHP default "overwrite on copy").
-     *
-     * @param $source Source folder.
-     * @param $dest Destination folder.
-     */
-    public static function recursiveCopy($source, $dest)
-    {
-        if(is_dir($source) === true) {
-            $dir = opendir($source);
-            while($file = readdir($dir)) {
-                if($file !== '.' && $file !== '..') {
-                    if(is_dir($source.'/'.$file) === true) {
-                        if(is_dir($dest.'/'.$file) === false) {
-                            mkdir($dest.'/'.$file);
-                        }
-                        self::recursiveCopy($source.'/'.$file, $dest.'/'.$file);
-                    } else {
-                        copy($source.'/'.$file, $dest.'/'.$file);
-                    }
-                }
-            }
-            closedir($dir);
-        } else {
-            copy($source, $dest);
-        }
     }
 
     /**
