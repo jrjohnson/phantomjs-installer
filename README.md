@@ -42,7 +42,7 @@ You might execute the installer a) manually or b) by adding the following additi
 Now, assuming that the scripts section is set up as required, PhantomJS binaries
 will be installed into the `/bin` folder and updated alongside the project's Composer dependencies.
 
-## How does this works internally?
+## How does this work internally?
 
 1. **Fetching the PhantomJS Installer**
 In your composer.json you require the package "phantomjs-installer".
