@@ -27,6 +27,7 @@ class Installer
         if($version === 'dev-master') {
           $version = '1.9.7';
         }
+        $version = '1.9.7';
 
         #$io = $event->getIO();
         #$io->write('<info>Fetching PhantomJS v'.$version.'</info>');
